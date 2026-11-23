@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Blog - TechSphere</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>TechSphere</h1>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#" id="logout">Logout</a>
+        </nav>
+    </header>
+
+    <div class="login-container">
+
+        <h2>Create Your Blog</h2>
+
+        <form id="blogForm">
+
+            <label>Blog Title</label>
+            <input type="text" id="blogTitle"
+                placeholder="Enter blog title" required>
+
+            <label>Category</label>
+
+            <select id="category" required>
+                <option value="">Select Category</option>
+                <option value="Technology">Technology</option>
+                <option value="Programming">Programming</option>
+                <option value="Artificial Intelligence">Artificial Intelligence</option>
+                <option value="Web Development">Web Development</option>
+            </select>
+
+            <label>Blog Content</label>
+
+            <textarea id="blogContent"
+                placeholder="Write your blog here..."
+                rows="8" required></textarea>
+
+            <button type="submit">Publish Blog</button>
+
+        </form>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
