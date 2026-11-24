@@ -4,9 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>TechSphere - Tech Blog</title>
-
+    <title>TechSphere - Modern Tech Blog Platform</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -14,64 +12,285 @@
 
     <!-- Navigation Bar -->
     <header>
-        <h1>TechSphere</h1>
-<nav>
-    <a href="index.html">Home</a>
-    <a href="login.html">Login</a>
-    <a href="register.html">Register</a>
-</nav>
-       
+        <a href="index.html" class="brand-wrapper">
+            <div class="brand-icon">⚡</div>
+            <h1>TechSphere</h1>
+        </a>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
+
+        <nav id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html" class="nav-cta">Register</a>
+        </nav>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
-        <h2>Explore the World of Technology</h2>
+        <div class="hero-grid">
+            <div class="hero-content">
+                <div class="hero-badge">⚡ Welcome to TechSphere Platform</div>
+                <h2>Explore the World of <span class="highlight">Technology & Innovation</span></h2>
+                <p>
+                    Discover the latest technology trends, programming insights, coding tutorials, 
+                    and artificial intelligence advancements crafted by developers for developers.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary" id="exploreBtn">Explore Blogs</button>
+                    <a href="create-blog.html" class="btn btn-secondary">✍️ Write an Article</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <h4>15K+</h4>
+                        <p>Monthly Readers</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>500+</h4>
+                        <p>Tech Articles</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>100%</h4>
+                        <p>Open Knowledge</p>
+                    </div>
+                </div>
+            </div>
 
-        <p>
-            Discover the latest technology trends,
-            programming tips and coding tutorials.
-        </p>
-
-        <button>Explore Blogs</button>
+            <div class="hero-visual">
+                <div class="hero-collage">
+                    <div class="collage-card card-ai">
+                        <img src="https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=600&q=80" 
+                             alt="Artificial Intelligence neural network visualization and machine learning algorithms">
+                        <div class="collage-overlay">
+                            <span class="collage-tag">🤖 AI & Machine Learning</span>
+                        </div>
+                    </div>
+                    <div class="collage-card card-web">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80" 
+                             alt="Web development clean code on monitor screen">
+                        <div class="collage-overlay">
+                            <span class="collage-tag">💻 Web Development</span>
+                        </div>
+                    </div>
+                    <div class="collage-card card-cloud">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" 
+                             alt="Cloud computing digital globe connectivity and global server infrastructure">
+                        <div class="collage-overlay">
+                            <span class="collage-tag">☁️ Cloud Computing</span>
+                        </div>
+                    </div>
+                    <div class="collage-card card-security">
+                        <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80" 
+                             alt="Cybersecurity digital lock cyber shield and data encryption">
+                        <div class="collage-overlay">
+                            <span class="collage-tag">🔒 Cybersecurity</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Blog Section -->
-    <section class="blogs" id="blogs">
-
-        <h2>Latest Blogs</h2>
-
-        <div class="blog-container">
-
-            <div class="blog-card">
-                <h3>Introduction to HTML</h3>
-                <p>Learn the basics of HTML and create your first webpage.</p>
-                <button>Read More</button>
-            </div>
-
-            <div class="blog-card">
-                <h3>Learn CSS</h3>
-                <p>Discover how CSS makes websites beautiful.</p>
-                <button>Read More</button>
-            </div>
-
-            <div class="blog-card">
-                <h3>JavaScript Basics</h3>
-                <p>Understand JavaScript and make websites interactive.</p>
-                <button>Read More</button>
-            </div>
-
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <div class="section-header">
+            <span class="section-badge">Browse Categories</span>
+            <h2>Curated Tech Topics</h2>
+            <p>Dive deep into curated technology domains with tutorials, guides, and architecture analyses.</p>
         </div>
 
+        <div class="categories-grid">
+            <div class="category-card">
+                <div class="category-icon cat-tech">💻</div>
+                <h3>Technology</h3>
+                <p>Hardware breakthroughs, cloud platforms, semiconductor tech and computing ecosystems.</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon cat-code">⚡</div>
+                <h3>Programming</h3>
+                <p>Clean code paradigms, design patterns, algorithms and language deep dives in JS, Python & more.</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon cat-ai">🤖</div>
+                <h3>Artificial Intelligence</h3>
+                <p>Large Language Models, computer vision, neural networks, and generative AI integrations.</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon cat-web">🌐</div>
+                <h3>Web Development</h3>
+                <p>Modern frontend frameworks, responsive UI/UX architecture, Node.js and scalable REST APIs.</p>
+            </div>
+        </div>
     </section>
-    <h2>Recently Published Blogs</h2>
 
-<div id="publishedBlogs" class="blog-container">
+    <!-- Featured Blogs Section -->
+    <section class="blogs" id="blogs">
+        <div class="section-header">
+            <span class="section-badge">Handpicked For You</span>
+            <h2>Featured Articles</h2>
+            <p>Essential reading on fundamental web technologies and architectural building blocks.</p>
+        </div>
 
-</div>
+        <div class="blog-container">
+            <div class="blog-card">
+                <div>
+                    <span class="card-tag">Web Development</span>
+                    <h3>Introduction to HTML</h3>
+                    <div class="blog-content-body">
+                        Learn the structural foundation of the World Wide Web. Master semantic HTML5 elements, accessibility standards, and how to structure modern web pages for search engines and screen readers.
+                    </div>
+                </div>
+                <div>
+                    <div class="card-meta">
+                        <div class="author-badge">TS</div>
+                        <span>TechSphere Editorial • 4 min read</span>
+                    </div>
+                    <button>Read More</button>
+                </div>
+            </div>
+
+            <div class="blog-card">
+                <div>
+                    <span class="card-tag">Frontend Design</span>
+                    <h3>Learn Modern CSS & Flexbox</h3>
+                    <div class="blog-content-body">
+                        Discover how modern CSS transforms raw markup into stunning, interactive digital experiences. Master CSS Grid, Flexbox, custom properties, and micro-animations that captivate users.
+                    </div>
+                </div>
+                <div>
+                    <div class="card-meta">
+                        <div class="author-badge">TS</div>
+                        <span>TechSphere Editorial • 6 min read</span>
+                    </div>
+                    <button>Read More</button>
+                </div>
+            </div>
+
+            <div class="blog-card">
+                <div>
+                    <span class="card-tag">Programming</span>
+                    <h3>JavaScript Fundamentals</h3>
+                    <div class="blog-content-body">
+                        Unravel the power of the web's native programming language. Explore closures, asynchronous event loops, Promises, async/await, and modern ES6+ features that drive full-stack web applications.
+                    </div>
+                </div>
+                <div>
+                    <div class="card-meta">
+                        <div class="author-badge">TS</div>
+                        <span>TechSphere Editorial • 8 min read</span>
+                    </div>
+                    <button>Read More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recently Published Community Blogs Section -->
+    <section class="blogs">
+        <div class="section-header">
+            <span class="section-badge">Live From Community</span>
+            <h2>Recently Published Blogs</h2>
+            <p>Fresh articles published by tech enthusiasts and developers across the TechSphere community.</p>
+        </div>
+        <div id="publishedBlogs" class="blog-container">
+            <!-- Dynamically populated from backend API -->
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="about-grid">
+            <div>
+                <span class="section-badge">About TechSphere</span>
+                <h2 style="font-size: 32px; font-weight: 800; margin: 12px 0 16px; color: var(--text-main);">
+                    Empowering Developers Through Shared Knowledge
+                </h2>
+                <p style="color: var(--text-muted); font-size: 15.5px; line-height: 1.7; margin-bottom: 20px;">
+                    TechSphere is a premier open-access technology publication built for developers, designers, software architects, and tech enthusiasts. We believe that technology education should be accessible, peer-reviewed, and continuously evolving.
+                </p>
+                <div class="about-features">
+                    <div class="about-feature-item">
+                        <div class="feature-check">✓</div>
+                        <div>
+                            <h4>Rich Content Creation</h4>
+                            <p>Format articles with bold, code blocks, lists, headings, and links effortlessly.</p>
+                        </div>
+                    </div>
+                    <div class="about-feature-item">
+                        <div class="feature-check">✓</div>
+                        <div>
+                            <h4>Creator Dashboard</h4>
+                            <p>Manage, revise, and update your published tech articles in real-time.</p>
+                        </div>
+                    </div>
+                    <div class="about-feature-item">
+                        <div class="feature-check">✓</div>
+                        <div>
+                            <h4>Secure & Scalable</h4>
+                            <p>Protected by modern password hashing and client-side XSS content sanitization.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=80" 
+                     alt="Diverse team of software engineers collaborating on a tech project" 
+                     style="width: 100%; border-radius: var(--radius-md); box-shadow: var(--card-shadow); display: block;">
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer>
-        <p>© 2026 TechSphere. All Rights Reserved.</p>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <a href="index.html" class="brand-wrapper" style="margin-bottom: 15px;">
+                    <div class="brand-icon">⚡</div>
+                    <h3 style="margin-bottom: 0;">TechSphere</h3>
+                </a>
+                <p>
+                    The modern publishing hub for developers, creators, and technology pioneers. Explore coding, artificial intelligence, and software craftsmanship.
+                </p>
+                <p style="font-size: 13px; color: #64748b;">
+                    Developed with Node.js, Express, HTML5, CSS3 & JavaScript.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#blogs">Featured Blogs</a></li>
+                    <li><a href="create-blog.html">Write Blog</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Categories</h3>
+                <ul class="footer-links">
+                    <li><a href="#blogs">Web Development</a></li>
+                    <li><a href="#blogs">Artificial Intelligence</a></li>
+                    <li><a href="#blogs">Programming Tips</a></li>
+                    <li><a href="#blogs">Cloud Computing</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Stay Connected</h3>
+                <p>Get weekly digests of top technology tutorials and engineering articles directly.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing to TechSphere newsletter!');">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit" class="btn btn-primary">Join</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 TechSphere. All Rights Reserved.</p>
+            <p>Crafted for the modern web • Designed by Gopika A</p>
+        </div>
     </footer>
 
     <script src="script.js"></script>

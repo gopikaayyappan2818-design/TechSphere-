@@ -4,20 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Create Blog - TechSphere</title>
-
+    <title>Write & Edit Blog - TechSphere</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+    <!-- Navigation Bar -->
     <header>
-        <h1>TechSphere</h1>
+        <a href="index.html" class="brand-wrapper">
+            <div class="brand-icon">⚡</div>
+            <h1>TechSphere</h1>
+        </a>
 
-        <nav>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
+
+        <nav id="navMenu">
             <a href="index.html">Home</a>
             <a href="dashboard.html">Dashboard</a>
+            <a href="create-blog.html" class="nav-cta">Write Article</a>
             <a href="#" id="logout">Logout</a>
         </nav>
     </header>
@@ -25,15 +30,14 @@
     <div class="login-container">
 
         <h2>Create Your Blog</h2>
+        <p>Craft your technology article with rich formatting and share it with the world.</p>
 
         <form id="blogForm">
 
-            <label>Blog Title</label>
-            <input type="text" id="blogTitle"
-                placeholder="Enter blog title" required>
+            <label for="blogTitle">Blog Title</label>
+            <input type="text" id="blogTitle" placeholder="e.g. Architecting Scalable Microservices with Node.js" required>
 
-            <label>Category</label>
-
+            <label for="category">Category</label>
             <select id="category" required>
                 <option value="">Select Category</option>
                 <option value="Technology">Technology</option>
@@ -42,17 +46,45 @@
                 <option value="Web Development">Web Development</option>
             </select>
 
-            <label>Blog Content</label>
+            <label>Blog Content (Rich Text Editor)</label>
+            
+            <!-- Rich Text Editor Toolbar -->
+            <div class="editor-toolbar" id="editorToolbar">
+                <button type="button" class="toolbar-btn" data-command="bold" title="Bold"><b>B</b></button>
+                <button type="button" class="toolbar-btn" data-command="italic" title="Italic"><i>I</i></button>
+                <button type="button" class="toolbar-btn" data-command="underline" title="Underline"><u>U</u></button>
+                <div class="toolbar-divider"></div>
+                <button type="button" class="toolbar-btn" data-command="formatBlock" data-val="h2" title="Heading 2"><b>H2</b></button>
+                <button type="button" class="toolbar-btn" data-command="formatBlock" data-val="h3" title="Heading 3"><b>H3</b></button>
+                <button type="button" class="toolbar-btn" data-command="formatBlock" data-val="p" title="Paragraph"><b>P</b></button>
+                <div class="toolbar-divider"></div>
+                <button type="button" class="toolbar-btn" data-command="insertUnorderedList" title="Bullet List">• List</button>
+                <button type="button" class="toolbar-btn" data-command="insertOrderedList" title="Numbered List">1. List</button>
+                <div class="toolbar-divider"></div>
+                <button type="button" class="toolbar-btn" data-command="createLink" title="Insert Link">🔗 Link</button>
+                <button type="button" class="toolbar-btn" data-command="unlink" title="Remove Link">Unlink</button>
+                <button type="button" class="toolbar-btn" data-command="removeFormat" title="Clear Formatting">🧹 Clear</button>
+            </div>
 
-            <textarea id="blogContent"
-                placeholder="Write your blog here..."
-                rows="8" required></textarea>
+            <!-- Contenteditable Rich Editor -->
+            <div id="richEditor" class="rich-editor" contenteditable="true" data-placeholder="Write your article here... Format headers, bullet points, code or links using the toolbar above."></div>
 
-            <button type="submit">Publish Blog</button>
+            <!-- Synced Hidden Textarea for form validity and compatibility -->
+            <textarea id="blogContent" class="hidden-textarea" required></textarea>
+
+            <button type="submit" class="btn btn-primary">Publish Blog</button>
 
         </form>
 
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-bottom">
+            <p>© 2026 TechSphere. All Rights Reserved.</p>
+            <p>Empowering Tech Creators Worldwide</p>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 

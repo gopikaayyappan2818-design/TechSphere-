@@ -4,38 +4,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Dashboard - TechSphere</title>
-
+    <title>Creator Dashboard - TechSphere</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+    <!-- Navigation Bar -->
     <header>
-        <h1>TechSphere</h1>
+        <a href="index.html" class="brand-wrapper">
+            <div class="brand-icon">⚡</div>
+            <h1>TechSphere</h1>
+        </a>
 
-        <nav>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
+
+        <nav id="navMenu">
             <a href="index.html">Home</a>
-            <a href="dashboard.html">Dashboard</a>
+            <a href="dashboard.html" class="nav-cta">Dashboard</a>
+            <a href="create-blog.html">Write Article</a>
             <a href="#" id="logout">Logout</a>
         </nav>
     </header>
 
-    <section class="hero">
-        <h2 id="welcomeMessage">Welcome to TechSphere!</h2>
+    <main style="padding: 40px 5%; max-width: 1280px; margin: 0 auto; width: 100%;">
 
-        <p>Manage your blogs and explore technology.</p>
+        <!-- Dashboard Hero Banner -->
+        <div class="dashboard-hero">
+            <div class="dashboard-hero-content">
+                <div class="hero-badge" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);">
+                    👤 Author Workspace
+                </div>
+                <h2 id="welcomeMessage">Welcome to TechSphere!</h2>
+                <p>Manage, refine, and publish your technology articles from one unified console.</p>
+            </div>
 
-        <button onclick="window.location.href='create-blog.html'">
-            Create New Blog
-        </button>
-    </section>
+            <div>
+                <button class="btn btn-primary" onclick="window.location.href='create-blog.html'">
+                    ✍️ Create New Blog
+                </button>
+            </div>
+        </div>
 
-    <section class="blogs">
-        <h2>My Dashboard</h2>
-        <p>Welcome! You can create and manage your blogs here.</p>
-    </section>
+        <!-- Dashboard Quick Stats -->
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-icon">📚</div>
+                <div>
+                    <h3 id="userBlogCount">0</h3>
+                    <p>Articles Published</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #e0f2fe; color: #0284c7;">⚡</div>
+                <div>
+                    <h3>Active</h3>
+                    <p>Contributor Status</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #fef3c7; color: #d97706;">🌟</div>
+                <div>
+                    <h3>Verified</h3>
+                    <p>Community Author</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Published Blogs Section -->
+        <section class="blogs" style="padding: 0; margin-bottom: 50px;">
+            <div class="section-header" style="text-align: left; margin-bottom: 30px;">
+                <span class="section-badge">Manage Content</span>
+                <h2>My Published Blogs</h2>
+                <p>View, edit formatted content, or delete your articles anytime.</p>
+            </div>
+
+            <div id="dashboardBlogs" class="blog-container">
+                <!-- User blogs populated by script.js -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-bottom">
+            <p>© 2026 TechSphere. All Rights Reserved.</p>
+            <p>Empowering Tech Creators Worldwide</p>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 
