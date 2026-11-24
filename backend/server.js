@@ -1,21 +1,48 @@
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
+
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
+const supabase = require("./config/supabase");
+
 const app = express();
-const users = [];
-const blogs = [];
-let nextUserId = 1;
-let nextBlogId = 1;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
+// UUID Validation
+const isValidUUID = (id) => {
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+};
+
+// Format User Response
+const formatUser = (user) => ({
+    id: user.id,
+    _id: user.id,
+    name: user.name,
+    email: user.email
+});
+
+// Format Blog Response
+const formatBlog = (blog) => ({
+    id: blog.id,
+    _id: blog.id,
+    title: blog.title,
+    category: blog.category,
+    content: blog.content,
+    author: blog.author,
+    createdAt: blog.created_at,
+    updatedAt: blog.updated_at
+});
+
 // Test API
 app.get("/", (req, res) => {
     res.send("TechSphere Backend Server is Running!");
 });
-// Test API Route
+
+// API Welcome Route
 app.get("/api", (req, res) => {
     res.json({
         message: "Welcome to TechSphere API!",
@@ -23,22 +50,27 @@ app.get("/api", (req, res) => {
     });
 });
 
-
-
 // User Registration API
 app.post("/api/register", async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
-        // Check required fields
         if (!name || !email || !password) {
             return res.status(400).json({
                 message: "All fields are required"
             });
         }
 
+        const normalizedEmail = email.toLowerCase().trim();
+
         // Check existing user
-        const existingUser = users.find(user => user.email === email);
+        const { data: existingUser, error: checkError } = await supabase
+            .from("users")
+            .select("id")
+            .eq("email", normalizedEmail)
+            .maybeSingle();
+
+        if (checkError) throw checkError;
 
         if (existingUser) {
             return res.status(409).json({
@@ -49,26 +81,26 @@ app.post("/api/register", async (req, res) => {
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Store user
-        const newUser = {
-            id: nextUserId++,
-            name,
-            email,
-            password: hashedPassword
-        };
+        // Insert user into Supabase
+        const { data: newUser, error } = await supabase
+            .from("users")
+            .insert({
+                name: name.trim(),
+                email: normalizedEmail,
+                password: hashedPassword
+            })
+            .select("id, name, email")
+            .single();
 
-        users.push(newUser);
+        if (error) throw error;
 
         res.status(201).json({
             message: "Registration successful!",
-            user: {
-                id: newUser.id,
-                name: newUser.name,
-                email: newUser.email
-            }
+            user: formatUser(newUser)
         });
 
     } catch (error) {
+        console.error("Registration error:", error);
         res.status(500).json({
             message: "Server error"
         });
@@ -80,15 +112,22 @@ app.post("/api/login", async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // Check required fields
         if (!email || !password) {
             return res.status(400).json({
                 message: "Email and password are required"
             });
         }
 
-        // Find user
-        const user = users.find(user => user.email === email);
+        const normalizedEmail = email.toLowerCase().trim();
+
+        // Find user in Supabase
+        const { data: user, error } = await supabase
+            .from("users")
+            .select("id, name, email, password")
+            .eq("email", normalizedEmail)
+            .maybeSingle();
+
+        if (error) throw error;
 
         if (!user) {
             return res.status(404).json({
@@ -97,10 +136,7 @@ app.post("/api/login", async (req, res) => {
         }
 
         // Compare password
-        const isMatch = await bcrypt.compare(
-            password,
-            user.password
-        );
+        const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
             return res.status(401).json({
@@ -110,14 +146,11 @@ app.post("/api/login", async (req, res) => {
 
         res.status(200).json({
             message: "Login successful!",
-            user: {
-                id: user.id,
-                name: user.name,
-                email: user.email
-            }
+            user: formatUser(user)
         });
 
     } catch (error) {
+        console.error("Login error:", error);
         res.status(500).json({
             message: "Server error"
         });
@@ -125,112 +158,195 @@ app.post("/api/login", async (req, res) => {
 });
 
 // Create Blog API
-app.post("/api/blogs", (req, res) => {
-    const { title, category, content, author } = req.body;
+app.post("/api/blogs", async (req, res) => {
+    try {
+        const { title, category, content, author } = req.body;
 
-    // Check required fields
-    if (!title || !category || !content || !author) {
-        return res.status(400).json({
-            message: "All fields are required"
+        if (!title || !category || !content || !author) {
+            return res.status(400).json({
+                message: "All fields are required"
+            });
+        }
+
+        const { data: newBlog, error } = await supabase
+            .from("blogs")
+            .insert({
+                title: title.trim(),
+                category: category.trim(),
+                content: content.trim(),
+                author: author.trim()
+            })
+            .select()
+            .single();
+
+        if (error) throw error;
+
+        res.status(201).json({
+            message: "Blog created successfully!",
+            blog: formatBlog(newBlog)
+        });
+
+    } catch (error) {
+        console.error("Create blog error:", error);
+        res.status(500).json({
+            message: "Server error"
         });
     }
-
-    // Create new blog
-    const newBlog = {
-        id: nextBlogId++,
-        title,
-        category,
-        content,
-        author
-    };
-
-    blogs.push(newBlog);
-
-    res.status(201).json({
-        message: "Blog created successfully!",
-        blog: newBlog
-    });
 });
 
 // Get All Blogs API
-app.get("/api/blogs", (req, res) => {
-    res.status(200).json({
-        message: "Blogs fetched successfully!",
-        blogs: blogs
-    });
+app.get("/api/blogs", async (req, res) => {
+    try {
+        const { data: blogs, error } = await supabase
+            .from("blogs")
+            .select("*")
+            .order("created_at", { ascending: false });
+
+        if (error) throw error;
+
+        res.status(200).json({
+            message: "Blogs fetched successfully!",
+            blogs: blogs.map(formatBlog)
+        });
+
+    } catch (error) {
+        console.error("Get blogs error:", error);
+        res.status(500).json({
+            message: "Server error"
+        });
+    }
 });
 
 // Get Single Blog API
-app.get("/api/blogs/:id", (req, res) => {
-    const blogId = parseInt(req.params.id);
-    const blog = blogs.find(b => b.id === blogId);
+app.get("/api/blogs/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
 
-    if (!blog) {
-        return res.status(404).json({
-            message: "Blog not found!"
+        if (!isValidUUID(id)) {
+            return res.status(404).json({
+                message: "Blog not found!"
+            });
+        }
+
+        const { data: blog, error } = await supabase
+            .from("blogs")
+            .select("*")
+            .eq("id", id)
+            .maybeSingle();
+
+        if (error) throw error;
+
+        if (!blog) {
+            return res.status(404).json({
+                message: "Blog not found!"
+            });
+        }
+
+        res.status(200).json({
+            message: "Blog fetched successfully!",
+            blog: formatBlog(blog)
+        });
+
+    } catch (error) {
+        console.error("Get single blog error:", error);
+        res.status(500).json({
+            message: "Server error"
         });
     }
-
-    res.status(200).json({
-        message: "Blog fetched successfully!",
-        blog: blog
-    });
 });
 
 // Update Blog API
-app.put("/api/blogs/:id", (req, res) => {
-    const blogId = parseInt(req.params.id);
-    const { title, category, content } = req.body;
+app.put("/api/blogs/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
 
-    // Check required fields
-    if (!title || !category || !content) {
-        return res.status(400).json({
-            message: "All fields are required"
+        if (!isValidUUID(id)) {
+            return res.status(404).json({
+                message: "Blog not found!"
+            });
+        }
+
+        const { title, category, content } = req.body;
+
+        if (!title || !category || !content) {
+            return res.status(400).json({
+                message: "All fields are required"
+            });
+        }
+
+        const { data: updatedBlog, error } = await supabase
+            .from("blogs")
+            .update({
+                title: title.trim(),
+                category: category.trim(),
+                content: content.trim(),
+                updated_at: new Date().toISOString()
+            })
+            .eq("id", id)
+            .select()
+            .maybeSingle();
+
+        if (error) throw error;
+
+        if (!updatedBlog) {
+            return res.status(404).json({
+                message: "Blog not found!"
+            });
+        }
+
+        res.status(200).json({
+            message: "Blog updated successfully!",
+            blog: formatBlog(updatedBlog)
+        });
+
+    } catch (error) {
+        console.error("Update blog error:", error);
+        res.status(500).json({
+            message: "Server error"
         });
     }
-
-    const blog = blogs.find(b => b.id === blogId);
-
-    if (!blog) {
-        return res.status(404).json({
-            message: "Blog not found!"
-        });
-    }
-
-    blog.title = title;
-    blog.category = category;
-    blog.content = content;
-
-    res.status(200).json({
-        message: "Blog updated successfully!",
-        blog: blog
-    });
 });
 
 // Delete Blog API
-app.delete("/api/blogs/:id", (req, res) => {
+app.delete("/api/blogs/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
 
-    const blogId = parseInt(req.params.id);
+        if (!isValidUUID(id)) {
+            return res.status(404).json({
+                message: "Blog not found!"
+            });
+        }
 
-    const blogIndex = blogs.findIndex(function(blog) {
-        return blog.id === blogId;
-    });
+        const { data: deletedBlog, error } = await supabase
+            .from("blogs")
+            .delete()
+            .eq("id", id)
+            .select("id")
+            .maybeSingle();
 
-    if (blogIndex === -1) {
-        return res.status(404).json({
-            message: "Blog not found!"
+        if (error) throw error;
+
+        if (!deletedBlog) {
+            return res.status(404).json({
+                message: "Blog not found!"
+            });
+        }
+
+        res.status(200).json({
+            message: "Blog deleted successfully!"
+        });
+
+    } catch (error) {
+        console.error("Delete blog error:", error);
+        res.status(500).json({
+            message: "Server error"
         });
     }
-
-    blogs.splice(blogIndex, 1);
-
-    res.status(200).json({
-        message: "Blog deleted successfully!"
-    });
-
 });
+
 // Start Server
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Details - TechSphere</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <header>
+        <a href="index.html" class="brand-wrapper">
+            <div class="brand-icon">⚡</div>
+            <h1>TechSphere</h1>
+        </a>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
+
+        <nav id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html" class="nav-cta">Register</a>
+        </nav>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="blog-detail-container" id="blogDetailContainer">
+        
+        <!-- Top Navigation / Back Button -->
+        <div class="blog-detail-toolbar">
+            <a href="index.html" class="btn btn-outline back-btn">← Back to Blogs</a>
+        </div>
+
+        <!-- Loading State -->
+        <div id="blogLoading" class="blog-status-box">
+            <div class="loading-spinner"></div>
+            <p>Loading article details...</p>
+        </div>
+
+        <!-- Friendly Not Found / Error State -->
+        <div id="blogNotFound" class="blog-status-box error-box" style="display: none;">
+            <div class="status-icon">🔍</div>
+            <h2>Article Not Found</h2>
+            <p id="blogNotFoundMsg">The article you are looking for does not exist or may have been removed.</p>
+            <div class="status-actions">
+                <a href="index.html" class="btn btn-primary">Browse All Blogs</a>
+            </div>
+        </div>
+
+        <!-- Individual Article View -->
+        <article id="blogArticle" class="blog-article-card" style="display: none;">
+            <header class="blog-article-header">
+                <div class="article-category-wrap">
+                    <span class="card-tag" id="blogCategory">Technology</span>
+                </div>
+                <h1 id="blogTitle" class="blog-article-title">Blog Title</h1>
+                <div class="blog-article-meta">
+                    <div class="author-meta-item">
+                        <div class="author-badge" id="blogAuthorBadge">T</div>
+                        <div class="author-details">
+                            <span class="meta-label">Written by</span>
+                            <strong id="blogAuthor" class="author-name">Author Name</strong>
+                        </div>
+                    </div>
+                    <div class="meta-separator">•</div>
+                    <div class="date-meta-item">
+                        <span class="meta-label">Published</span>
+                        <strong id="blogDate" class="publish-date">Published Date</strong>
+                    </div>
+                </div>
+            </header>
+
+            <div class="blog-article-divider"></div>
+
+            <!-- Full Sanitized Article Content -->
+            <div id="blogContent" class="blog-article-body"></div>
+
+            <!-- Article Footer -->
+            <footer class="blog-article-footer">
+                <div class="article-footer-actions">
+                    <a href="index.html" class="btn btn-outline">← Back to Blogs</a>
+                    <a href="create-blog.html" class="btn btn-primary">✍️ Write Your Own Article</a>
+                </div>
+            </footer>
+        </article>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <a href="index.html" class="brand-wrapper" style="margin-bottom: 15px;">
+                    <div class="brand-icon">⚡</div>
+                    <h3 style="margin-bottom: 0;">TechSphere</h3>
+                </a>
+                <p>
+                    The modern publishing hub for developers, creators, and technology pioneers. Explore coding, artificial intelligence, and software craftsmanship.
+                </p>
+                <p style="font-size: 13px; color: #64748b;">
+                    Developed with Node.js, Express, MongoDB, HTML5, CSS3 & JavaScript.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#blogs">Featured Blogs</a></li>
+                    <li><a href="create-blog.html">Write Blog</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Categories</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html#blogs">Web Development</a></li>
+                    <li><a href="index.html#blogs">Artificial Intelligence</a></li>
+                    <li><a href="index.html#blogs">Programming Tips</a></li>
+                    <li><a href="index.html#blogs">Cloud Computing</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Stay Connected</h3>
+                <p>Get weekly digests of top technology tutorials and engineering articles directly.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing to TechSphere newsletter!');">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit" class="btn btn-primary">Join</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 TechSphere. All Rights Reserved.</p>
+            <p>Crafted for the modern web • Designed by Gopika A</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -477,10 +477,10 @@ if (publishedBlogs) {
                     </div>
                 `;
 
-                // Attach modal read handler
+                // Navigate to individual blog page using MongoDB blog ID
                 const readBtn = blogCard.querySelector("button");
                 readBtn.addEventListener("click", function () {
-                    openArticleModal(blog.title, blog.author, blog.category, blog.content);
+                    window.location.href = `blog.html?id=${blog.id || blog._id}`;
                 });
 
                 publishedBlogs.appendChild(blogCard);
@@ -492,6 +492,93 @@ if (publishedBlogs) {
     }
 
     loadPublishedBlogs();
+}
+
+// --------------------------------------------------------------------------
+// 7.1 Single Blog Details Loader (blog.html)
+// --------------------------------------------------------------------------
+
+const blogDetailContainer = document.getElementById("blogDetailContainer");
+if (blogDetailContainer) {
+    async function loadSingleBlog() {
+        const loadingEl = document.getElementById("blogLoading");
+        const notFoundEl = document.getElementById("blogNotFound");
+        const articleEl = document.getElementById("blogArticle");
+        const notFoundMsg = document.getElementById("blogNotFoundMsg");
+
+        // 4. In blog.html, extract the ID using URLSearchParams
+        const urlParams = new URLSearchParams(window.location.search);
+        const blogId = urlParams.get("id");
+
+        if (!blogId || blogId.trim() === "") {
+            if (loadingEl) loadingEl.style.display = "none";
+            if (notFoundEl) notFoundEl.style.display = "block";
+            if (notFoundMsg) notFoundMsg.textContent = "No article ID was specified in the URL.";
+            return;
+        }
+
+        try {
+            // 5. Fetch individual blog using GET http://localhost:3000/api/blogs/:id
+            const response = await fetch(`${API_BASE}/blogs/${encodeURIComponent(blogId.trim())}`);
+            const data = await response.json();
+
+            if (loadingEl) loadingEl.style.display = "none";
+
+            if (!response.ok || !data.blog) {
+                if (notFoundEl) notFoundEl.style.display = "block";
+                if (notFoundMsg) notFoundMsg.textContent = data.message || "The requested article could not be found.";
+                return;
+            }
+
+            const blog = data.blog;
+            const safeCategory = escapeHTML(blog.category || "General");
+            const safeAuthor = escapeHTML(blog.author || "Tech Enthusiast");
+
+            // Format Published Date
+            let formattedDate = "Recently published";
+            if (blog.createdAt) {
+                const dateObj = new Date(blog.createdAt);
+                if (!isNaN(dateObj.getTime())) {
+                    formattedDate = dateObj.toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric"
+                    });
+                }
+            }
+
+            // 6. Display blog's Title, Category, Full content, Author, Published date
+            const titleEl = document.getElementById("blogTitle");
+            const categoryEl = document.getElementById("blogCategory");
+            const authorEl = document.getElementById("blogAuthor");
+            const authorBadgeEl = document.getElementById("blogAuthorBadge");
+            const dateEl = document.getElementById("blogDate");
+            const contentEl = document.getElementById("blogContent");
+
+            if (titleEl) titleEl.textContent = blog.title;
+            if (categoryEl) categoryEl.textContent = safeCategory;
+            if (authorEl) authorEl.textContent = safeAuthor;
+            if (authorBadgeEl) authorBadgeEl.textContent = safeAuthor.charAt(0).toUpperCase();
+            if (dateEl) dateEl.textContent = formattedDate;
+
+            // Sanitize rich formatted content
+            if (contentEl) {
+                contentEl.innerHTML = sanitizeHTML(blog.content);
+            }
+
+            // Update document title
+            document.title = `${blog.title} - TechSphere`;
+
+            if (articleEl) articleEl.style.display = "block";
+        } catch (error) {
+            console.error("Error loading blog details:", error);
+            if (loadingEl) loadingEl.style.display = "none";
+            if (notFoundEl) notFoundEl.style.display = "block";
+            if (notFoundMsg) notFoundMsg.textContent = "Unable to connect to backend server. Please verify the server is running.";
+        }
+    }
+
+    loadSingleBlog();
 }
 
 // --------------------------------------------------------------------------
