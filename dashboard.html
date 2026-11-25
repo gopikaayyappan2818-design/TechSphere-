@@ -46,6 +46,21 @@
             </div>
         </div>
 
+        <!-- User Profile Card -->
+        <section class="profile-card" id="userProfileCard" aria-label="User Profile">
+            <div class="profile-info">
+                <div class="profile-avatar" id="profileAvatar">U</div>
+                <div class="profile-details">
+                    <span class="section-badge" style="margin-bottom: 6px;">Authenticated Account</span>
+                    <h3 id="profileName">Loading profile...</h3>
+                    <p id="profileEmail">Loading email...</p>
+                </div>
+            </div>
+            <div class="profile-actions">
+                <button type="button" id="dashboardLogoutBtn" class="btn btn-outline profile-logout-btn">🚪 Logout</button>
+            </div>
+        </section>
+
         <!-- Dashboard Quick Stats -->
         <div class="dashboard-stats">
             <div class="stat-card">
@@ -56,14 +71,14 @@
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon" style="background: #e0f2fe; color: #0284c7;">⚡</div>
+                <div class="stat-icon" style="background: #fef3c7; color: #d97706;">🔖</div>
                 <div>
-                    <h3>Active</h3>
-                    <p>Contributor Status</p>
+                    <h3 id="userBookmarkCount">0</h3>
+                    <p>Saved Bookmarks</p>
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon" style="background: #fef3c7; color: #d97706;">🌟</div>
+                <div class="stat-icon" style="background: #e0f2fe; color: #0284c7;">🌟</div>
                 <div>
                     <h3>Verified</h3>
                     <p>Community Author</p>
@@ -71,8 +86,14 @@
             </div>
         </div>
 
+        <!-- Dashboard Tab Switcher -->
+        <div class="dashboard-tabs" style="display:flex; gap:12px; margin-bottom:30px;">
+            <button class="btn btn-primary tab-btn active-tab" id="tabMyBlogs" onclick="switchTab('myBlogs')">📚 My Published Blogs</button>
+            <button class="btn btn-outline tab-btn" id="tabSaved" onclick="switchTab('saved')">🔖 Saved Blogs</button>
+        </div>
+
         <!-- Published Blogs Section -->
-        <section class="blogs" style="padding: 0; margin-bottom: 50px;">
+        <section class="blogs" id="myBlogsSection" style="padding: 0; margin-bottom: 50px;">
             <div class="section-header" style="text-align: left; margin-bottom: 30px;">
                 <span class="section-badge">Manage Content</span>
                 <h2>My Published Blogs</h2>
@@ -83,6 +104,46 @@
                 <!-- User blogs populated by script.js -->
             </div>
         </section>
+
+        <!-- Saved Blogs Section -->
+        <section class="blogs" id="savedSection" style="padding: 0; margin-bottom: 50px; display:none;">
+            <div class="section-header" style="text-align: left; margin-bottom: 30px;">
+                <span class="section-badge">Your Reading List</span>
+                <h2>📌 Saved Blogs</h2>
+                <p>Articles you have bookmarked for later reading.</p>
+            </div>
+
+            <div id="savedBlogs" class="blog-container">
+                <!-- Saved blogs populated by script.js -->
+            </div>
+        </section>
+
+        <script>
+            function switchTab(tab) {
+                var mySection = document.getElementById('myBlogsSection');
+                var savedSection = document.getElementById('savedSection');
+                var tabMy = document.getElementById('tabMyBlogs');
+                var tabSaved = document.getElementById('tabSaved');
+
+                if (tab === 'myBlogs') {
+                    mySection.style.display = 'block';
+                    savedSection.style.display = 'none';
+                    tabMy.classList.add('active-tab');
+                    tabMy.classList.remove('btn-outline');
+                    tabSaved.classList.remove('active-tab');
+                    tabSaved.classList.add('btn-outline');
+                } else {
+                    mySection.style.display = 'none';
+                    savedSection.style.display = 'block';
+                    tabMy.classList.remove('active-tab');
+                    tabMy.classList.add('btn-outline');
+                    tabSaved.classList.add('active-tab');
+                    tabSaved.classList.remove('btn-outline');
+                    // FIX Bug 1: loadSavedBlogs is now always a global function — no typeof guard needed
+                    loadSavedBlogs();
+                }
+            }
+        </script>
 
     </main>
 

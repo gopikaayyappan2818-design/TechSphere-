@@ -59,7 +59,7 @@
             <div class="hero-visual">
                 <div class="hero-collage">
                     <div class="collage-card card-ai">
-                        <img src="https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=600&q=80" 
+                        <img src="https://images.unsplash.com/photo-1617791160505-6f00504e3519?auto=format&fit=crop&w=800&q=80"
                              alt="Artificial Intelligence neural network visualization and machine learning algorithms">
                         <div class="collage-overlay">
                             <span class="collage-tag">🤖 AI & Machine Learning</span>
@@ -123,75 +123,66 @@
         </div>
     </section>
 
-    <!-- Featured Blogs Section -->
+    <!-- Featured Blogs Section (Dynamic from API) -->
     <section class="blogs" id="blogs">
         <div class="section-header">
             <span class="section-badge">Handpicked For You</span>
-            <h2>Featured Articles</h2>
-            <p>Essential reading on fundamental web technologies and architectural building blocks.</p>
+            <h2>⭐ Featured Articles</h2>
+            <p>Top recently published articles from the TechSphere community.</p>
         </div>
+        <div id="featuredBlogs" class="blog-container">
+            <!-- Dynamically populated from backend API -->
+        </div>
+    </section>
 
-        <div class="blog-container">
-            <div class="blog-card">
-                <div>
-                    <span class="card-tag">Web Development</span>
-                    <h3>Introduction to HTML</h3>
-                    <div class="blog-content-body">
-                        Learn the structural foundation of the World Wide Web. Master semantic HTML5 elements, accessibility standards, and how to structure modern web pages for search engines and screen readers.
-                    </div>
-                </div>
-                <div>
-                    <div class="card-meta">
-                        <div class="author-badge">TS</div>
-                        <span>TechSphere Editorial • 4 min read</span>
-                    </div>
-                    <button>Read More</button>
-                </div>
-            </div>
-
-            <div class="blog-card">
-                <div>
-                    <span class="card-tag">Frontend Design</span>
-                    <h3>Learn Modern CSS & Flexbox</h3>
-                    <div class="blog-content-body">
-                        Discover how modern CSS transforms raw markup into stunning, interactive digital experiences. Master CSS Grid, Flexbox, custom properties, and micro-animations that captivate users.
-                    </div>
-                </div>
-                <div>
-                    <div class="card-meta">
-                        <div class="author-badge">TS</div>
-                        <span>TechSphere Editorial • 6 min read</span>
-                    </div>
-                    <button>Read More</button>
-                </div>
-            </div>
-
-            <div class="blog-card">
-                <div>
-                    <span class="card-tag">Programming</span>
-                    <h3>JavaScript Fundamentals</h3>
-                    <div class="blog-content-body">
-                        Unravel the power of the web's native programming language. Explore closures, asynchronous event loops, Promises, async/await, and modern ES6+ features that drive full-stack web applications.
-                    </div>
-                </div>
-                <div>
-                    <div class="card-meta">
-                        <div class="author-badge">TS</div>
-                        <span>TechSphere Editorial • 8 min read</span>
-                    </div>
-                    <button>Read More</button>
-                </div>
-            </div>
+    <!-- Trending Blogs Section -->
+    <section class="blogs" id="trending-section">
+        <div class="section-header">
+            <span class="section-badge">Hot Right Now</span>
+            <h2>🔥 Trending Articles</h2>
+            <p>Most-read articles based on recency and depth of content.</p>
+        </div>
+        <div id="trendingBlogs" class="blog-container">
+            <!-- Dynamically populated from backend API -->
         </div>
     </section>
 
     <!-- Recently Published Community Blogs Section -->
-    <section class="blogs">
+    <section class="blogs" id="community-section">
         <div class="section-header">
             <span class="section-badge">Live From Community</span>
             <h2>Recently Published Blogs</h2>
             <p>Fresh articles published by tech enthusiasts and developers across the TechSphere community.</p>
         </div>
+
+        <!-- Search + Filter Bar -->
+        <div class="filter-bar">
+            <div class="search-wrapper">
+                <input type="text" id="searchInput" placeholder="Search by title, author, category or keyword..." class="search-input" />
+                <button id="clearSearchBtn" class="btn btn-outline clear-search-btn" style="display:none;">✕ Clear</button>
+            </div>
+            <select id="categoryFilter" class="filter-select">
+                <option value="all">All Categories</option>
+                <option value="Technology">Technology</option>
+                <option value="Programming">Programming</option>
+                <option value="Artificial Intelligence">Artificial Intelligence</option>
+                <option value="Web Development">Web Development</option>
+                <option value="Cybersecurity">Cybersecurity</option>
+                <option value="Education">Education</option>
+            </select>
+            <select id="sortSelect" class="filter-select">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="az">A–Z</option>
+                <option value="za">Z–A</option>
+            </select>
+        </div>
+
+        <div id="noResultsMessage" style="display:none; text-align:center; padding:40px; background:white; border-radius:12px; border:1px dashed #cbd5e1;">
+            <p style="color:#64748b; font-size:16px; margin-bottom:15px;">No articles match your search criteria.</p>
+            <button id="resetFiltersBtn" class="btn btn-outline">🔄 Clear Filters</button>
+        </div>
+
         <div id="publishedBlogs" class="blog-container">
             <!-- Dynamically populated from backend API -->
         </div>
